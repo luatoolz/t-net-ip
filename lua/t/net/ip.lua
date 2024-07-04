@@ -4,20 +4,25 @@ local is = t.is
 local mn = 256 -- 1 byte
 local md = mn -- mod divisor
 
+local function toint(x)
+  if type(x)~='number' then x=0 end
+  return string.format('%d', x)
+end
+
 local cached = t.cached(tonumber)
 return setmetatable({}, {
   __tonumber=function(self) return self.n or 0 end,
   __eq=function(self, o) return self.n==(self(o) or {}).n end,
   __tostring=function(self)
     local n = tonumber(self.n or 0)+0
-    local d = n % md
+    local d = math.floor(n % md)
     n=math.floor(n / mn)
-    local c = n % md
+    local c = math.floor(n % md)
     n=math.floor(n / mn)
-    local b = n % md
+    local b = math.floor(n % md)
     n=math.floor(n / mn)
-    local a = n % md
-    return table.concat({tostring(a), tostring(b), tostring(c), tostring(d)}, '.')
+    local a = math.floor(n % md)
+    return table.concat({toint(a), toint(b), toint(c), toint(d)}, '.')
   end,
   __call=function(self, o)
   if type(o)=='nil' then return nil end
