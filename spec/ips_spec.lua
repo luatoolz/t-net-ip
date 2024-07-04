@@ -1,12 +1,17 @@
 describe('ips', function()
-  local t, ip, ips, li
+  local t, is, ip, ips, li
   setup(function()
     t = require("t")
+    is = t.is
     ip = t.net.ip
     ips = t.net.ips
   end)
   before_each(function()
     li = ips()
+  end)
+  it("is.of.set", function()
+    assert.truthy(is.of.set(ips))
+    assert.truthy(is.of.set(li))
   end)
 	it("check callable", function()
 		assert.callable(ip)
@@ -45,14 +50,24 @@ describe('ips', function()
 		assert.same(a, b, c, d, e, f)
 	end)
 	it("tostring", function()
+    local r1 = {["1.1.1.1\n1.2.3.4"]=true, ["1.2.3.4\n1.1.1.1"]=true}
+    local r2 = {["1.1.1.1\n1.2.3.4\n8.8.4.4"]=true, ["1.1.1.1\n8.8.4.4\n1.2.3.4"]=true,
+                ["1.2.3.4\n1.1.1.1\n8.8.4.4"]=true, ["1.2.3.4\n8.8.4.4\n1.1.1.1"]=true,
+                ["8.8.4.4\n1.1.1.1\n1.2.3.4"]=true, ["8.8.4.4\n1.2.3.4\n1.1.1.1"]=true,}
 		assert.equal('', tostring(li))
+		_ = li + '1.1.1.1'
+    assert.truthy(li['1.1.1.1'])
+		assert.equal('1.1.1.1', tostring(li))
 		_ = li + '1.1.1.1' + '1.2.3.4'
     assert.truthy(li['1.1.1.1'])
-		assert.equal("1.1.1.1\n1.2.3.4", tostring(li))
-		_ = li + '8.8.4.4' + '8.32.17.2'
-		assert.equal("1.1.1.1\n8.8.4.4\n8.32.17.2\n1.2.3.4", tostring(li))
+    assert.truthy(li['1.2.3.4'])
+		assert.is_true(r1[tostring(li)])
+		_ = li + '8.8.4.4'
+		assert.is_true(r2[tostring(li)])
 	end)
---  it("type name check", function()
---    assert.equal('t/net/ips', getmetatable(ips('1.2.3.4')).__name)
---  end)
+  it("type name check", function()
+    assert.equal('t/net/ips', is.typed(ips))
+    assert.equal('t/net/ips', is.typed(ips()))
+    assert.equal('t/net/ips', is.typed(ips('1.2.3.4')))
+  end)
 end)
