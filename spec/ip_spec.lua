@@ -3,7 +3,7 @@ describe("ip", function()
   local mn, ip8, ip255
   setup(function()
     t = require "t"
-    ip = t.net.ip
+    ip = require "t.net.ip"
     is = t.is
     mn=256
     ip8=8*(mn^3) + 8*(mn^2) + 8*(mn) + 8 --134744072
@@ -56,16 +56,16 @@ describe("ip", function()
     assert.truthy(ip(ip8) == ip(ip('8.8.8.8')))
   end)
   it("is", function()
-    assert.equal(true, is.net.ip(t.net.ip('8.8.8.8')))
-    assert.equal(true, is.net.ip(t.net.ip(t.net.ip('8.8.8.8'))))
-    assert.truthy(is.net.ip(t.net.ip('8.8.8.8')))
-    assert.truthy(is.net.ip(t.net.ip('8.8.8.8')))
-    assert.falsy(is.net.ip(t.net.ip('8.8.8.8888')))
+    assert.equal(true, is.net.ip(ip('8.8.8.8')))
+    assert.equal(true, is.net.ip(ip(ip('8.8.8.8'))))
+    assert.truthy(is.net.ip(ip('8.8.8.8')))
+    assert.truthy(is.net.ip(ip('8.8.8.8')))
+    assert.falsy(is.net.ip(ip('8.8.8.8888')))
     assert.falsy(is.net.ip(function() end))
   end)
   it("is.typed", function()
-    assert.is_string('t/net/ip', is.typed(t.net.ip))
-    assert.is_nil(is.typed(t.net.ip()))
-    assert.equal('t/net/ip', is.typed(t.net.ip('8.8.8.8')))
+    assert.is_string('t/net/ip', is.typed(ip))
+    assert.is_nil(is.typed(ip()))
+    assert.equal('t/net/ip', is.typed(ip('8.8.8.8')))
   end)
 end)

@@ -3,8 +3,8 @@ describe('ips', function()
   setup(function()
     t = require("t")
     is = t.is
-    ip = t.net.ip
-    ips = t.net.ips
+    ip = require "t.net.ip"
+    ips = require "t.net.ips"
   end)
   before_each(function()
     li = ips()

@@ -1,3 +1,4 @@
 local t = require "t"
+local ip = require "t.net.ip"
 
-return t.set:of(t.fn.combined(t.net.ip, tostring))
+return t.set:of(t.fn.combined(ip, tostring))
