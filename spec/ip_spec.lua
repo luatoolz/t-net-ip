@@ -1,11 +1,11 @@
 describe("ip", function()
-  local t, ip, is, tonumber
+  local t, ip, is, tonum
   local mn, ip8, ip255
   setup(function()
     t = require "t"
     ip = require "t.net.ip"
     is = t.is
-    tonumber = t.to.number
+    tonum = t.to.number
     mn=256
     ip8=8*(mn^3) + 8*(mn^2) + 8*(mn) + 8 --134744072
     ip255=255*(mn^3) + 255*(mn^2) + 255*(mn) + 255
@@ -41,13 +41,13 @@ describe("ip", function()
     assert.equal('255.255.255.255', tostring(ip('255.255.255.255')))
     assert.equal('255.255.255.255', tostring(ip(ip255)))
   end)
-  it("tonumber", function()
-    assert.equal(ip8, tonumber(ip('8.8.8.8')))
-    assert.equal(ip8, tonumber(ip(ip8)))
-    assert.equal(0, tonumber(ip('0.0.0.0')))
-    assert.equal(0, tonumber(ip(0)))
-    assert.equal(ip255, tonumber(ip('255.255.255.255')))
-    assert.equal(ip255, tonumber(ip(ip255)))
+  it("tonum", function()
+    assert.equal(ip8, tonum(ip('8.8.8.8')))
+    assert.equal(ip8, tonum(ip(ip8)))
+    assert.equal(0, tonum(ip('0.0.0.0')))
+    assert.equal(0, tonum(ip(0)))
+    assert.equal(ip255, tonum(ip('255.255.255.255')))
+    assert.equal(ip255, tonum(ip(ip255)))
   end)
   it("eq", function()
     assert.truthy(rawequal(ip('8.8.8.8'), ip('8.8.8.8')))
