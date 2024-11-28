@@ -1,10 +1,11 @@
 describe("ip", function()
-  local t, ip, is
+  local t, ip, is, tonumber
   local mn, ip8, ip255
   setup(function()
     t = require "t"
     ip = require "t.net.ip"
     is = t.is
+    tonumber = t.to.number
     mn=256
     ip8=8*(mn^3) + 8*(mn^2) + 8*(mn) + 8 --134744072
     ip255=255*(mn^3) + 255*(mn^2) + 255*(mn) + 255
@@ -64,8 +65,8 @@ describe("ip", function()
     assert.falsy(is.net.ip(function() end))
   end)
   it("is.typed", function()
-    assert.type('t/net/ip', ip)
+    assert.type('net/ip', ip)
     assert.type(nil, ip())
-    assert.type('t/net/ip', ip('8.8.8.8'))
+    assert.type('net/ip', ip('8.8.8.8'))
   end)
 end)

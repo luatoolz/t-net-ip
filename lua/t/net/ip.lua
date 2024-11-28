@@ -1,5 +1,6 @@
 local t = require "t"
 local is = t.is
+local tonumber = t.to.number
 
 local mn = 256 -- 1 byte
 local md = mn -- mod divisor
@@ -13,6 +14,10 @@ local cached = t.cached(tonumber)
 return setmetatable({}, {
   __tonumber = function(self) return self.n or 0 end,
   __eq = function(self, o) return self.n == (self(o) or {}).n end,
+  __export = function(self, fix)
+    if fix then return t.exporter(self, fix, true) end
+    return tostring(self)
+  end,
   __tostring = function(self)
     local n = tonumber(self.n or 0) + 0
     local d = math.floor(n % md)
